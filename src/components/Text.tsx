@@ -1,11 +1,11 @@
-import React, { FC, ReactNode } from "react";
+import React, { ReactNode } from "react";
 
-interface PropTypes {
-  as?: any;
+type PropTypes<C extends React.ElementType> = {
+  as?: C;
   children: ReactNode;
-}
+} & React.ComponentProps<C>;
 
-const Text: FC<PropTypes> = ({ as, children }) => {
+const Text = <C extends React.ElementType>({ as, children }: PropTypes<C>) => {
   const Component = as || "span";
   return <Component>{children}</Component>;
 };
