@@ -5,7 +5,7 @@ type PropTypes<C extends React.ElementType> = {
   children: ReactNode;
 } & React.ComponentProps<C>;
 
-const Text = <C extends React.ElementType>({ as, children, ...rest }: PropTypes<C>) => {
+const Text = <C extends React.ElementType = "span">({ as, children, ...rest }: PropTypes<C>) => {
   const Component = as || "span";
   return <Component {...rest}>{children}</Component>;
 };
