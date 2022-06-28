@@ -1,5 +1,10 @@
 import Text from "./components/Text";
 import "./App.css";
+import React from "react";
+
+const Emphasis = ({ children }: { children: string }) => (
+  <em style={{ background: "yellow", color: "black", fontSize: "24px" }}>{children}</em>
+);
 
 function App() {
   return (
@@ -10,6 +15,8 @@ function App() {
       <Text as='a' href='asd'>
         H2
       </Text>
+      <br />
+      <Text as={Emphasis}>!Emphasis!</Text>
     </div>
   );
 }
