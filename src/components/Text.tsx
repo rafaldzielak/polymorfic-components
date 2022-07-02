@@ -2,15 +2,28 @@ import React, { ReactNode } from "react";
 
 type Rainbow = "red" | "orage" | "yellow" | "green" | "blue" | "indigo" | "violet";
 
-type TextProps<C extends React.ElementType> = {
+type AsProp<C extends React.ElementType> = {
   as?: C;
+};
+
+type PropsToOmit<C extends React.ElementType, Props> = keyof (Props & AsProp<C>);
+
+type PolymorficComponentProps<C extends React.ElementType, Props = {}> = Props &
+  AsProp<C> &
+  React.PropsWithChildren<Props & AsProp<C>> &
+  Omit<React.ComponentPropsWithoutRef<C>, PropsToOmit<C, Props>>;
+
+type TextProps = {
   color?: Rainbow;
-} & Omit<React.ComponentPropsWithoutRef<C>, "color">;
+};
 
-type Props<C extends React.ElementType> = React.PropsWithChildren<TextProps<C>> &
-  Omit<React.ComponentPropsWithoutRef<C>, keyof TextProps<C>>;
-
-const Text = <C extends React.ElementType = "span">({ children, as, style, color, ...props }: Props<C>) => {
+const Text = <C extends React.ElementType = "span">({
+  children,
+  as,
+  style,
+  color,
+  ...props
+}: PolymorficComponentProps<C, TextProps>) => {
   const Component = as || "span";
 
   const styles = color ? { style: { ...style, color } } : {};
