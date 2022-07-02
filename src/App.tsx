@@ -10,7 +10,7 @@ function App() {
   return (
     <div className='App'>
       <p>Hello Vite + React!</p>
-      <Text as='h1' color='blue'>
+      <Text as='h1' color='blue' style={{ background: "black" }}>
         H1
       </Text>
       <Text as='h2'>H2</Text>
