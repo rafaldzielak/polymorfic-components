@@ -1,4 +1,4 @@
-import React, { forwardRef, ReactNode } from "react";
+import React, { forwardRef, ReactElement, ReactNode } from "react";
 
 type Rainbow = "red" | "orage" | "yellow" | "green" | "blue" | "indigo" | "violet";
 
@@ -21,7 +21,15 @@ type Props<C extends React.ElementType, P> = PolymorficComponentProps<C, P>;
 
 type PolymorficRef<C extends React.ElementType> = React.ComponentPropsWithRef<C>["ref"];
 
-const Text = forwardRef(
+type PolymorficComponentPropsWithRef<C extends React.ElementType, P> = PolymorficComponentProps<C, P> & {
+  ref?: PolymorficRef<C>;
+};
+
+type TextComponent = <C extends React.ElementType>(
+  props: PolymorficComponentPropsWithRef<C, TextProps>
+) => ReactElement | null;
+
+const Text: TextComponent = forwardRef(
   <C extends React.ElementType = "span">(
     { children, as, style, color, ...props }: Props<C, TextProps>,
     ref?: PolymorficRef<C>
@@ -30,7 +38,7 @@ const Text = forwardRef(
 
     const styles = color ? { style: { ...style, color } } : {};
     return (
-      <Component {...styles} {...props}>
+      <Component {...styles} {...props} ref={ref}>
         {children}
       </Component>
     );
